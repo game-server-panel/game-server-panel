@@ -15,8 +15,10 @@ router.get("/id/:id", (req, res) => {
 router.get("/list", (req, res) => {
     docker.listContainers({
         all: true
-    },function (err, containers) {
-        res.send(containers);
+    }, function (err, containers) {
+        if (containers === null) {res.send([])} else {
+            res.send(containers);
+        }
     });
 });
 router.get("/start/:id", (req, res) => {
