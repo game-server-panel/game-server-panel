@@ -1,0 +1,25 @@
+{
+  "name": "game-server-panel",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx concurrently \"cd frontend && npm start\" \"cd backend && npm start\"",
+    "dependencies": "cd frontend && npm install && cd ../backend && npm install",
+    "frontend": "cd ./frontend && npm start",
+    "backend": "cd ./backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Superredstone/game-server-panel.git"
+  },
+  "author": "Superredstone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Superredstone/game-server-panel/issues"
+  },
+  "homepage": "https://github.com/Superredstone/game-server-panel#readme",
+  "dependencies": {
+    "concurrently": "^6.2.1"
+  }
+}

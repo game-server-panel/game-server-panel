@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.navbar {
+  margin: 20px;
+}
+
+.main-title {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.create-server-screen {
+  margin: 50px;
+}
+
+div > form > select {
+  margin-top: 20px;
+}
+
+div > form > .form-check {
+  margin-top: 20px;
+}
+
+.control-card-buttons > button {
+  margin-right: 20px;
+}
+
+.loading {
+  z-index: 100;
+  margin-left: 50%;
+  margin-right: 50%;
+}
+
+.commands-history {
+  margin-bottom: 20px;
+  resize: none;
+  color: white;
+}
+
+.table > tbody > tr {
+  vertical-align: middle;
+}
+
+.table-action-buttons > a {
+  margin-right: 10px;
+}
+
+.btn-space > button {
+  margin-left: 10px;
+}
