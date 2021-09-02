@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import CreateMinecraftBedrockServer from '../Components/CreateMinecraftBedrockServer';
 
 import CreateMinecraftServer from '../Components/CreateMinecraftServer'
 
@@ -10,6 +11,9 @@ function CreateServerScreen() {
     switch (watch("SelectedGame")) {
         case "Minecraft":
             SelectedGame = <CreateMinecraftServer></CreateMinecraftServer>;
+            break;
+        case "Minecraft Bedrock":
+            SelectedGame = <CreateMinecraftBedrockServer></CreateMinecraftBedrockServer>;
             break;
         case "Terraria":
             SelectedGame = null;
@@ -25,7 +29,7 @@ function CreateServerScreen() {
             <select {...register("SelectedGame")} className="form-select" style={{height: 60}} aria-label="Default select example">
                 <option>Select a game</option>
                 <option value="Minecraft">Minecraft</option>
-                <option value="Terraria">Terraria</option>
+                <option value="Minecraft Bedrock">Minecraft Bedrock</option>
                 <option value="Unavabile">WIP</option>
             </select>
             <div>{SelectedGame}</div>

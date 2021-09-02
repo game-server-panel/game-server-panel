@@ -66,6 +66,13 @@ router.post("/create/:game", async function(req, res) {
             res.send({Error: data})
         : 
             res.send({Error: null});
+    } else if (req.params.game === "bedrock") {
+        const data = await safeTerminal.execCommand(`docker run -d -it -e EULA=TRUE -p ${req.body.port ? req.body.port : 19132}:19132/udp ${req.body.name ? "--name " + String(req.body.name).toLowerCase().replaceAll(" ", "") : ""} itzg/minecraft-bedrock-server`);
+        Log("Server created", "Info");
+        data ?
+            res.send({Error: data})
+        :   
+            res.send({Error: null})
     } else {
         res.send({Error: "Game not implemented"})
     }

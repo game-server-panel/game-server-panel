@@ -7,13 +7,15 @@
 - [Docker](https://www.docker.com/)
 
 # How to install 
-1. git clone https://github.com/game-server-panel/game-server-panel
-2. cd game-server-panel
-3. npm dependencies
-4. npm start
+See [https://game-server-panel.github.io/docs/install/ubuntu/](https://game-server-panel.github.io/docs/install/ubuntu/)
 
 # TODO:
 - [x] Container filesystem reader
 - [x] Create new container from frontend
 - [ ] Login system (Currently not working)
 - [x] Design a logo
+
+# Known issues
+- Login not working
+- CLI not working with Minecraft Bedrock edition
+- Filemanager download is very bad (I'm searching a better way)

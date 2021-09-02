@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-//import { v4 as GenerateUUID } from 'uuid';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
