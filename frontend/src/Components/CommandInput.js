@@ -1,14 +1,16 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 function CommandInput(props) {
     const { register, watch, handleSubmit } = useForm();
+    const [ reset, setReset ] = useState(false);
 
     function onSubmit(data) {
-        axios.get("/containers/exec/minecraft/" + props.containerId + "/" + watch("Command"))
-            .then(response => {
-                console.log(response);
+        axios.get("/containers/exec/" + props.containerId + "/" + watch("Command"))
+            .then(() => {
+                setReset(true);
+                setReset(false);
             })
             .catch(error => {
                 console.log(error);
@@ -17,8 +19,13 @@ function CommandInput(props) {
 
     return (
         <form className="input-group mb-3" onSubmit={handleSubmit(onSubmit)}>
-                <input className="form-control command-history" type="text" {...register("Command")}  placeholder="Command" autoComplete="off"/>
-                <button className="btn btn-primary" type="submit">Send</button>
+            {
+                reset ?
+                    <input className="form-control command-history" type="text" {...register("Command")}  placeholder="Command" autoComplete="off" value=""/>
+                :
+                    <input className="form-control command-history" type="text" {...register("Command")}  placeholder="Command" autoComplete="off"/>
+            }
+            <button className="btn btn-primary" type="submit">Send</button>
         </form>
     );
 }

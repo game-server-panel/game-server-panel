@@ -2,6 +2,8 @@ const express = require("express");
 const { safeTerminal } = require("../Terminal");
 const { Log } = require("../Utils.js");
 const router = express.Router();
+const fs = require("fs");
+const { default: axios } = require("axios");
 
 router.get("/id/:id", (req, res) => {
     docker.getContainer(req.params.id).inspect(function (err, data) {
@@ -37,12 +39,13 @@ router.get("/stop/:id", (req, res) => {
         };
     })
 });
-router.get("/exec/:game/:id/:cmd", async function(req, res) {
+router.get("/exec/:container/:command", async function(req, res) {
     try {
-        if (req.params.game == "minecraft") {
-            const data = await safeTerminal.execMinecraftCommand(req.params.cmd, req.params.id);
-            res.send({Error: null, Data: data});
-        }
+        docker.getContainer(req.params.container).attach({stream: true, stdout: true, stdin: true, stderr: true}, (err, stream) => {
+            err ? Log("Error: " + err, "Error") && res.send({Error: err})
+            : 
+            stream.write(req.params.command + "\n") && res.send({Error: null});
+        });
     } catch (error) {
         Log("Error: " + error, "Error");
         res.send({Error: error});

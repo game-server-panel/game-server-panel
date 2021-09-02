@@ -17,5 +17,5 @@ See [https://game-server-panel.github.io/docs/install/ubuntu/](https://game-serv
 
 # Known issues
 - Login not working
-- CLI not working with Minecraft Bedrock edition
+- ~~CLI not working with Minecraft Bedrock edition~~ [Solved]
 - Filemanager download is very bad (I'm searching a better way)
