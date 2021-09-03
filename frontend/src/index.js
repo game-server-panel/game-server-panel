@@ -17,21 +17,32 @@ import 'bootstrap/dist/js/bootstrap';
 import Homescreen from './Screens/Homescreen';
 import CreateServerScreen from './Screens/CreateServerScreen';
 import Navbar from './Components/Navbar';
-import RegisterScreen from './Screens/RegisterScreen';
 import LoginScreen from './Screens/LoginScreen';
+import RegisterScreen from './Screens/RegisterScreen';
 import ContainerScreen from './Screens/ContainerScreen';
 import ConsoleScreen from './Screens/ConsoleScreen';
 import Error404 from './Screens/Error404';
 import FilemanagerScreen from './Screens/FilemanagerScreen';
+import useToken from './Components/UseToken';
+import LogoutScreen from './Screens/LogoutScreen';
 
-ReactDOM.render(
-  <React.StrictMode>
+function App() {
+  const { token, setToken } = useToken();
+
+  if (!token) {
+    return (
+      <LoginScreen setToken={setToken}></LoginScreen>
+    )
+  }
+
+  return (
     <Router>
-    <Navbar></Navbar>
-      <Switch>
+      <Navbar></Navbar> 
+      <Switch> 
         <Route exact path="/" component={Homescreen}></Route>
-        <Route exact path="/login" component={LoginScreen}></Route>
+        <Route exact path="/home" component={Homescreen}></Route>
         <Route exact path="/register" component={RegisterScreen}></Route>
+        <Route exact path="/logout"><LogoutScreen setToken={setToken}/></Route>
         <Route exact path="/createserver" component={CreateServerScreen}></Route>
         <Route exact path="/container/:id" component={ContainerScreen}></Route>
         <Route exact path="/console/:id" component={ConsoleScreen}></Route>
@@ -40,9 +51,10 @@ ReactDOM.render(
         <Route path="*" component={Error404}></Route>
       </Switch>
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  );
+}
+
+ReactDOM.render(React.createElement(App), document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -26,22 +26,19 @@ Log("Docker initialized");
     app.use("/containers", require("./routes/Containers"));
     app.use("/filemanager", require("./routes/Filemanager"));
 
-    app.get("/api/users/sessionid", (req, res) => {
-        Log("NEW SESSION ID " + req.session.id, "Warning") 
-        res.send(req.session.id);
+    app.get("/api/users/logout", (req, res) => {
+        req.session.destroy();
+        res.send({Error: null});
     })
     app.post("/api/users/login", (req, res) => {
         if (req.session.loggedIn) {
             res.send({Error: null})
         } else {
             UsersCollection.findOne({email: req.body.email, password: req.body.password}, (err, user) => {
-                if (user) {
-                    req.session.loggedIn = true;
-                    req.session.email = req.body.email;
-    
+                if (user) {    
                     console.log(req.session)
         
-                    res.send({Error: null})
+                    res.send({Error: null, sessionToken: req.session.id});
                 } else {
                     res.send(JSON.stringify({Error: "Invalid email or password"}));
                 }
@@ -63,10 +60,7 @@ Log("Docker initialized");
                     }
                     if (found) {
                         UsersCollection.insertOne({email: req.body.email, password: req.body.password});
-                        req.session.cookie.loggedIn = true;
-                        req.session.cookie.email = req.body.email;
-        
-                        res.send({Error: null});
+                        res.send({Error: null, sessionToken: req.session.id});
                     } else {
                         res.send({Error: "Invalid secret code"})
                     }

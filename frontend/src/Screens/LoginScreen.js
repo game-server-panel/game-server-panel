@@ -2,22 +2,21 @@ import FormInput from '../Components/FormInput';
 import { useForm } from 'react-hook-form';
 import { sha256 } from 'js-sha256';
 import axios from 'axios';
-import { Redirect } from 'react-router';
 import { useState } from 'react';
 
-function LoginScreen() {
+function LoginScreen({ setToken }) {
     const [ errorAlert, setErrorAlert ] = useState();
     const { register, handleSubmit } = useForm();
 
     function onSubmit(data) {
         axios.post("/api/users/login", {email: sha256(data.email), password: sha256(data.password)})
-        .then((response) => {
-            setErrorAlert(response.data.Error);
-            if (response.data.Error === null) {
-                setErrorAlert(<Redirect to="/"></Redirect>);
-            }
-        })
-
+            .then((response) => {
+                setErrorAlert(response.data.Error);
+                if (response.data.Error === null) {
+                    setToken(response.data.sessionToken);
+                    window.location.href = "/";
+                }
+            });
     }
 
     return (
