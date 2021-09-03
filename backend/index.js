@@ -35,9 +35,7 @@ Log("Docker initialized");
             res.send({Error: null})
         } else {
             UsersCollection.findOne({email: req.body.email, password: req.body.password}, (err, user) => {
-                if (user) {    
-                    console.log(req.session)
-        
+                if (user) {            
                     res.send({Error: null, sessionToken: req.session.id});
                 } else {
                     res.send(JSON.stringify({Error: "Invalid email or password"}));

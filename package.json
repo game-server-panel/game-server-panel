@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx concurrently \"cd frontend && npm start\" \"cd backend && npm start\"",
     "dependencies": "cd frontend && npm install && cd ../backend && npm install",
+    "createuser": "node CreateUser.js",
     "frontend": "cd ./frontend && npm start",
     "backend": "cd ./backend && npm start"
   },
@@ -21,6 +22,8 @@
   "homepage": "https://github.com/Superredstone/game-server-panel#readme",
   "dependencies": {
     "concurrently": "^6.2.1",
+    "js-sha256": "^0.9.0",
+    "mongodb": "^4.1.1",
     "react-router": "^5.2.1"
   }
 }
