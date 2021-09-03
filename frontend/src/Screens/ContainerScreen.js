@@ -35,6 +35,7 @@ class ContainerScreen extends React.Component {
         return (
             <div className="card" style={{margin: 25}}>
                 <div className="card-body">
+                    <Link to={"/"}><button className="btn btn-primary" style={{marginBottom: 10}}>Go back</button></Link>
                     {
                         this.state.Container !== "err" ?  
                             !this.state.isFetching ?

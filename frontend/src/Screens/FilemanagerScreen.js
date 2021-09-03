@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import DownloadLink from "react-download-link";
 const path = require("path");
+const download = require("downloadjs");
 
 const EditableFiles = [
     ".txt",
@@ -38,13 +38,15 @@ function FilemanagerScreen(props) {
         getFiles();
     }, []);
 
-    const getDataFromURL = (url) => new Promise((resolve, reject) => {
-        setTimeout(() => {
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {resolve(data)});
-        });
-    }, 2000);
+    const handleDownload = async (containerId, filename) => {
+        const res = await fetch("/filemanager/download/" + containerId + "?file=" + filename);
+
+        var file;
+
+        path.extname(filename) === ".json" ? file = await res.text() : file = await res.blob()
+
+        download(file, filename);
+    }
 
     return (
         <div className="card" style={{margin: 15}}>
@@ -90,8 +92,9 @@ function FilemanagerScreen(props) {
                                         <tr key={i}>
                                             <th>{file}</th>
                                             <th className="table-action-buttons">
-                                                <DownloadLink label={<i className="btn btn-primary bi bi-download" style={{marginRight: 10}}></i>} style={{all: "unset"}} filename={file} exportFile={() => Promise.resolve(getDataFromURL("/filemanager/download/" + props.match.params.id + "?file=" + currentFolder + "/" + file))}></DownloadLink>
-                                                
+                                                <div className="HERE WERE OLD CODE"></div>
+                                                <button className="btn btn-primary bi bi-download" style={{marginRight: 10}} onClick={() => handleDownload(props.match.params.id, file).finally(() => {console.log("Downloading file")})}></button>
+
                                                 {
                                                     EditableFiles.includes(path.extname(file)) ?
                                                         <Link to="/" className="btn btn-primary">
@@ -115,3 +118,6 @@ function FilemanagerScreen(props) {
 }
 
 export default FilemanagerScreen;
+
+//<DownloadLink label={<i className="btn btn-primary bi bi-download" style={{marginRight: 10}}></i>} style={{all: "unset"}} filename={file} exportFile={() => Promise.resolve(getDataFromURL("/filemanager/download/" + props.match.params.id + "?file=" + currentFolder + "/" + file))}></DownloadLink>
+//Nord Sud-est Nord-ovest Nord-est Sud-est
