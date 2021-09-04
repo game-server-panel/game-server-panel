@@ -113,6 +113,23 @@ router.post("/write/:id", async (req, res) => {
             }
         }
     })
-})
+});
+router.get("/create/:id", async (req, res) => {
+    docker.getContainer(req.params.id).inspect(function (err, data) {
+        if (err) {
+            Log("Error: " + err, "Error");
+            res.send({Error: err});
+        } else {
+            const file = path.join(containersPathJoin(data.Mounts[0].Name), req.query.file);
+
+            if (fs.existsSync(file)) {
+                res.send({Error: "File already exists"});
+            } else {
+                fs.writeFileSync(file, "");
+
+                res.send({Error: null})
+            }
+        }
+    })})
 
 module.exports = router;
