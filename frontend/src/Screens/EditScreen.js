@@ -36,12 +36,13 @@ function EditScreen(props) {
     return (
         <div className="card" style={{margin: 15}}>
             <div className="card-body">
-                
-                <textarea  className="form-control editable-div" value={FileContent} onChange={(e) => {setFileContent(e.target.value); console.log(FileContent)}} ></textarea>
+                <button className="btn btn-primary" style={{marginBottom: 15}} onClick={() => {window.history.back()}}>Go back</button>
+
+                <textarea className="form-control editable-div" value={FileContent} onChange={(e) => {setFileContent(e.target.value)}} ></textarea>
                 
                 {
                     saved ? 
-                    <div class="alert alert-success" role="alert" style={{marginTop: 10}}>
+                    <div className="alert alert-success" role="alert" style={{marginTop: 10}}>
                         File saved
                     </div>
                     : null
@@ -49,15 +50,11 @@ function EditScreen(props) {
 
                 <div className="file-editor-buttons">
                     <button className="btn btn-success" onClick={handleSave}>Save</button>
-                    <button className="btn btn-danger" onClick={() => {window.history.back()/*window.location.href = "/filemanager/" + props.match.params.id + "/"*/}}>Cancel</button>
+                    <button className="btn btn-danger" onClick={() => {window.history.back()}}>Cancel</button>
                 </div>
             </div>
         </div>
     )
 }
-
-/////////////////////////////////////////
-//NON SALVA IL CONTENUTO DI <textarea/>//
-/////////////////////////////////////////
 
 export default EditScreen;

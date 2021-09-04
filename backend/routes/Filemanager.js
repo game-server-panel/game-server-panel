@@ -63,13 +63,12 @@ router.get("/download/:containerId", async (req, res) => {
             Log("Error: " + err, "Error");
             res.send({Error: err});
         } else {
-            var dir;
-
-            req.query.file ?
-                dir = path.join(containersPathJoin(data.Mounts[0].Name), req.query.file) &&
-                res.download(dir)
-            :
+            if (req.query.file) {
+                const dir = path.join(containersPathJoin(data.Mounts[0].Name), req.query.file);
+                res.download(dir);
+            } else {
                 res.send({Error: "No file input"});
+            }
         }
     })
 });

@@ -14,6 +14,7 @@ const EditableFiles = [
 
 function FilemanagerScreen(props) {
     const [ FileDatas, setFileDatas ] = useState();
+    const [ CreateFileName, setCreateFileName ] = useState();
 
     const useLocationSearch = useLocation().search;
     const currentFolder = new URLSearchParams(useLocationSearch).get("folder");
@@ -39,7 +40,8 @@ function FilemanagerScreen(props) {
     }, []);
 
     const handleDownload = async (containerId, filename) => {
-        const res = await fetch("/filemanager/download/" + containerId + "?file=" + filename);
+        console.log("/filemanager/download/" + containerId + "?file=" + currentFolder + "/" + filename)
+        const res = await fetch("/filemanager/download/" + containerId + "?file=" + currentFolder + "/" + filename);
 
         var file;
 
@@ -48,11 +50,27 @@ function FilemanagerScreen(props) {
         download(file, filename);
     }
 
+    function CreateFile() {
+        axios.post("/filemanager/write/" + props.match.params.id + "?file=/" + currentFolder + "/" + CreateFileName, {newFileContent: ""})
+            .then(() => {window.location.reload()})
+            .catch(error => {console.log(error)});
+    }
+
     return (
         <div className="card" style={{margin: 15}}>
             <div className="card-body">
                 <div className="btn-space">
                     <Link to={"/container/" + props.match.params.id}><button className="btn btn-primary">Go back</button></Link>
+
+                    <button className="btn btn-primary" id="createNewFile" data-bs-toggle="dropdown"><i className="bi bi-file-earmark-plus"></i></button>
+                    <ul className="dropdown-menu" aria-labelledby="createNewFile">
+                        <li style={{margin: 10}}>File name:</li>
+                        <li style={{margin: 10}}><input className="form-control" onChange={(event) => {setCreateFileName(event.target.value)}}></input></li>
+                        <li>
+                            <button className="btn btn-success" style={{margin: 10}} onClick={CreateFile}>Save</button>
+                        </li>
+                    </ul>
+
                     {
                         currentFolder === "" ?
                             null
@@ -92,7 +110,7 @@ function FilemanagerScreen(props) {
                                         <tr key={i}>
                                             <th>{file}</th>
                                             <th className="table-action-buttons">
-                                                <button className="btn btn-primary bi bi-download" style={{marginRight: 10}} onClick={() => handleDownload(props.match.params.id, file).finally(() => {console.log("Downloading file")})}></button>
+                                                <button className="btn btn-primary bi bi-download download-file-button" style={{marginRight: 10}} onClick={() => handleDownload(props.match.params.id, file).finally(() => {console.log("Downloading file")})}></button>
 
                                                 {
                                                     EditableFiles.includes(path.extname(file)) ?

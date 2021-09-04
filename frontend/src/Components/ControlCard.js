@@ -128,10 +128,13 @@ class ControlCard extends React.Component {
         this.onStart();
     }
 
+    goBack = () => {window.history.back()};
+
     render() {
         return (
             <div className="card" style={{margin: 15}} >
                 <div className="card-body">
+                    <button className="btn btn-primary" onClick={this.goBack} style={{marginBottom: 20}}>Go back</button>
                     <div className="form-floating">
                         {
                             this.state.commandHistory ?
@@ -146,7 +149,7 @@ class ControlCard extends React.Component {
                     </div>
                     <CommandInput containerId={this.props.containerId}></CommandInput>
 
-                    <div className="form-check" style={{marginBottom: -30}}>
+                    <div className="form-check fix-bottom-check">
                         <input className="form-check-input" type="checkbox" checked={this.state.fixToBottom} onChange={this.handleCheckboxChange}/>
                         <label className="form-check-label">Fix to bottom</label>
                     </div>

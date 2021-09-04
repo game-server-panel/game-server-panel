@@ -1,3 +1,9 @@
+@media only screen and (max-device-width: 640px) {
+  .download-file-button {
+    margin-bottom: 10px;
+  }
+}
+ 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -73,3 +79,8 @@ div > form > .form-check {
 .file-editor-buttons > button {
   margin-right: 15px;
 }
+
+.fix-bottom-check {
+  margin-bottom: -30px;
+}
+
