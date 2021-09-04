@@ -25,6 +25,7 @@ import Error404 from './Screens/Error404';
 import FilemanagerScreen from './Screens/FilemanagerScreen';
 import useToken from './Components/UseToken';
 import LogoutScreen from './Screens/LogoutScreen';
+import EditScreen from './Screens/EditScreen';
 
 function App() {
   const { token, setToken } = useToken();
@@ -47,6 +48,7 @@ function App() {
         <Route exact path="/container/:id" component={ContainerScreen}></Route>
         <Route exact path="/console/:id" component={ConsoleScreen}></Route>
         <Route exact path="/filemanager/:id" component={FilemanagerScreen}></Route>
+        <Route exact path="/filemanager/:id/edit" component={EditScreen}></Route>
 
         <Route path="*" component={Error404}></Route>
       </Switch>

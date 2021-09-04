@@ -60,3 +60,16 @@ div > form > .form-check {
 .btn-space > button {
   margin-left: 10px;
 }
+
+.editable-div {
+  height: 60vh;
+  resize: none;
+}
+
+.file-editor-buttons {
+  margin-top: 15px;
+}
+
+.file-editor-buttons > button {
+  margin-right: 15px;
+}

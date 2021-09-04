@@ -130,7 +130,7 @@ class ControlCard extends React.Component {
 
     render() {
         return (
-            <div className="card" style={{marginLeft: 15, marginRight: 15}} >
+            <div className="card" style={{margin: 15}} >
                 <div className="card-body">
                     <div className="form-floating">
                         {

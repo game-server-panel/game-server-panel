@@ -61,19 +61,59 @@ router.get("/download/:containerId", async (req, res) => {
     docker.getContainer(req.params.containerId).inspect(function (err, data) {
         if (err) {
             Log("Error: " + err, "Error");
-            return null;
+            res.send({Error: err});
         } else {
             var dir;
 
             req.query.file ?
-                dir = path.join(containersPathJoin(data.Mounts[0].Name), req.query.file)
+                dir = path.join(containersPathJoin(data.Mounts[0].Name), req.query.file) &&
+                res.download(dir)
             :
                 res.send({Error: "No file input"});
-            
-            //res.set("Content-Type", "text/plain");
-            res.sendFile(dir);
         }
     })
 });
+router.get("/content/:id", async (req, res) => {
+    docker.getContainer(req.params.id).inspect(function (err, data) {
+        if (err) {
+            Log("Error: " + err, "Error");
+            res.send({Error: err});
+        } else {
+            if (req.query.file) { 
+                const file = path.join(containersPathJoin(data.Mounts[0].Name), req.query.file);
+
+                if (fs.existsSync(file)) {
+                    const fileContent = fs.readFileSync(file, {encoding: "utf-8"});
+
+                    res.send({Error: null, FileContent: fileContent});
+                } else {
+                    res.send({Error: "File not found"});
+                }
+            } else {
+                res.send({Error: "No file input"});
+            }
+        }
+    })
+});
+router.post("/write/:id", async (req, res) => {
+    docker.getContainer(req.params.id).inspect(function (err, data) {
+        if (err) {
+            Log("Error: " + err, "Error");
+            res.send({Error: err});
+        } else {
+            if (req.query.file) {
+                const file = path.join(containersPathJoin(data.Mounts[0].Name), req.query.file);
+
+                var fileContent = req.body.newFileContent;
+
+                fs.writeFileSync(file, fileContent);
+
+                res.send({Error: null, Wrote: fileContent});
+            } else {
+                res.send({Error: "No file to write"});
+            }
+        }
+    })
+})
 
 module.exports = router;

@@ -9,7 +9,7 @@ const EditableFiles = [
     ".properties",
     ".json",
     ".settings",
-    ""
+    ".log"
 ]
 
 function FilemanagerScreen(props) {
@@ -92,12 +92,11 @@ function FilemanagerScreen(props) {
                                         <tr key={i}>
                                             <th>{file}</th>
                                             <th className="table-action-buttons">
-                                                <div className="HERE WERE OLD CODE"></div>
                                                 <button className="btn btn-primary bi bi-download" style={{marginRight: 10}} onClick={() => handleDownload(props.match.params.id, file).finally(() => {console.log("Downloading file")})}></button>
 
                                                 {
                                                     EditableFiles.includes(path.extname(file)) ?
-                                                        <Link to="/" className="btn btn-primary">
+                                                        <Link to={"/filemanager/" + props.match.params.id + "/edit?file=" + currentFolder + "/" + file} className="btn btn-primary">
                                                             <i className="bi bi-code-slash"></i>
                                                         </Link>
                                                     : 
