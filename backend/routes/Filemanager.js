@@ -130,6 +130,25 @@ router.get("/create/:id", async (req, res) => {
                 res.send({Error: null})
             }
         }
-    })})
+    })
+});
+router.get("/mkdir/:id", async (req, res) => {
+    docker.getContainer(req.params.id).inspect(function (err, data) {
+        if (err) {
+            Log("Error: " + err, "Error");
+            res.send({Error: err});
+        } else {
+            const folder = path.join(containersPathJoin(data.Mounts[0].Name), req.query.folder);
+
+            if (fs.existsSync(folder)) {
+                res.send({Error: "Folder already exists"});
+            } else {
+                fs.mkdirSync(folder);
+
+                res.send({Error: null})
+            }
+        }
+    })
+})
 
 module.exports = router;

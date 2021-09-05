@@ -20,6 +20,7 @@ const EditableFiles = [
 function FilemanagerScreen(props) {
     const [ FileDatas, setFileDatas ] = useState();
     const [ CreateFileName, setCreateFileName ] = useState();
+    const [ CreateFolderName, setCreateFolderName ] = useState();
 
     const useLocationSearch = useLocation().search;
     const currentFolder = new URLSearchParams(useLocationSearch).get("folder");
@@ -60,6 +61,12 @@ function FilemanagerScreen(props) {
             .catch(error => {console.log(error)});
     }
 
+    function CreateFolder() {
+        axios.get("/filemanager/mkdir/" + props.match.params.id + "?folder=/" + currentFolder + "/" + CreateFolderName)
+            .then(() => {window.location.reload()})
+            .catch(error => {console.log(error)});
+    }
+
     return (
         <div className="card" style={{margin: 15}}>
             <div className="card-body">
@@ -74,6 +81,16 @@ function FilemanagerScreen(props) {
                             <button className="btn btn-success" style={{margin: 10}} onClick={CreateFile}>Save</button>
                         </li>
                     </ul>
+                    
+                    <button className="btn btn-primary" id="createNewFolder" data-bs-toggle="dropdown"><i className="bi bi-folder-plus"></i></button>
+                    <ul className="dropdown-menu" aria-labelledby="createNewFolder">
+                        <li style={{margin: 10}}>Folder name:</li>
+                        <li style={{margin: 10}}><input className="form-control" onChange={(event) => {setCreateFolderName(event.target.value)}}></input></li>
+                        <li>
+                            <button className="btn btn-success" style={{margin: 10}} onClick={CreateFolder}>Save</button>
+                        </li>
+                    </ul>
+
 
                     {
                         currentFolder === "" ?
