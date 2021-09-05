@@ -63,7 +63,7 @@ router.get("/history/:id", async function(req, res) {
 router.post("/create/:game", async function(req, res) {
     Log("Creating new server", "Info");
     if (req.params.game === "minecraft") {
-        const data = await safeTerminal.execCommand(`docker run -d -it -p ${req.body.port ? req.body.port : 25565}:25565 ${req.body.name ? "--name " + String(req.body.name).toLowerCase().replaceAll(" ", "") : ""} -e EULA=TRUE itzg/minecraft-server`);
+        const data = await safeTerminal.execCommand(`docker run -d -it -p ${req.body.port ? req.body.port : 25565}:25565 ${req.body.name ? "--name " + String(req.body.name).toLowerCase().replaceAll(" ", "") : ""} -e EULA=TRUE ${req.body.version ? "-e VERSION=" + req.body.version : null} itzg/minecraft-server`);
         Log("Server created", "Info");
         data ? 
             res.send({Error: data})
