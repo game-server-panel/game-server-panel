@@ -79,6 +79,15 @@ router.post("/create/:game", async function(req, res) {
     } else {
         res.send({Error: "Game not implemented"})
     }
+});
+router.get("/delete/:container", async function(req, res) {
+    Log("Deleting " + req.params.container, "Warning");
+    await safeTerminal.execCommand(`docker stop ${req.params.container}`);
+    const data = await safeTerminal.execCommand(`docker rm ${req.params.container}`);
+    data ? 
+        res.send({Error: data})
+    :
+        res.send({Error: null});
 })
 
 module.exports = router;

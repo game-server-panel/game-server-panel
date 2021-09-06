@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import DeleteContainer from "../Components/DeleteContainer";
 
 class ContainerScreen extends React.Component {
     constructor(props) {
@@ -47,6 +48,7 @@ class ContainerScreen extends React.Component {
                                     <div className="d-grid gap-2 col-6 mx-auto">
                                         <Link className="btn btn-primary" to={"/console/" + this.state.ContainerID}>Console</Link>
                                         <Link className="btn btn-primary" to={"/filemanager/" + this.state.ContainerID + "?folder="}>File manager</Link>
+                                        <DeleteContainer containerName={this.state.Container.Name} containerId={this.state.ContainerID}></DeleteContainer>
                                     </div>
                                 </div>
                             :
