@@ -13,6 +13,10 @@ I'm going to add lots of games like Terraria, Rust etc. I also want to create a 
 # How to install 
 See [https://game-server-panel.github.io/docs/install/ubuntu/](https://game-server-panel.github.io/docs/install/ubuntu/)
 
+or 
+
+use the installer in the installer/ folder
+
 # TODO:
 - [x] Container filesystem reader
 - [x] Create new container from frontend

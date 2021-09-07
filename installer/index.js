@@ -23,11 +23,7 @@ exec("cat /etc/debian_version", (error, stdout, stderr) => {
             printOutput(error, stdout, stderr);
             error, stdout, stderr = exec("sudo systemctl enable --now docker");
             printOutput(error, stdout, stderr);
-            error, stdout, stderr = exec("git clone https://github.com/game-server-panel/game-server-panel.git /var/www/game-server-panel");
-            printOutput(error, stdout, stderr);
-            error, stdout, stderr = exec("cd /var/www/game-server-panel");
-            printOutput(error, stdout, stderr);
-            error, stdout, stderr = exec("sudo npm run dependencies");
+            error, stdout, stderr = exec("npm run dependencies");
             printOutput(error, stdout, stderr);
         };
     };
